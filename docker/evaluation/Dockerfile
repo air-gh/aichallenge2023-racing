@@ -10,7 +10,10 @@ RUN rm -rf /autoware/install/autoware_launch
 RUN mkdir /ws
 # RUN curl -s https://packagecloud.io/install/repositories/github/git-lfs/script.deb.sh | sudo bash
 RUN --mount=type=cache,target=/var/cache/apt apt install -y git-lfs
-RUN git lfs clone https://github.com/AutomotiveAIChallenge/aichallenge2023-racing /ws/aichallenge2023-racing
+# RUN git lfs clone https://github.com/AutomotiveAIChallenge/aichallenge2023-racing /ws/aichallenge2023-racing
+RUN cp -r aichallenge2023-racing /ws/aichallenge2023-racing
+RUN git -C /ws/aichallenge2023-racing pull
+RUN git -C /ws/aichallenge2023-racing lfs pull
 
 # Copy into Container
 COPY AWSIM /ws/AWSIM
