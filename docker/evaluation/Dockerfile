@@ -8,8 +8,8 @@ RUN rm -rf /autoware/install/autoware_launch
 # -----------------------------------
 
 RUN mkdir /ws
-RUN curl -s https://packagecloud.io/install/repositories/github/git-lfs/script.deb.sh | sudo bash
-RUN sudo apt install -y git-lfs
+# RUN curl -s https://packagecloud.io/install/repositories/github/git-lfs/script.deb.sh | sudo bash
+RUN --mount=type=cache,target=/var/cache/apt apt install -y git-lfs
 RUN git lfs clone https://github.com/AutomotiveAIChallenge/aichallenge2023-racing /ws/aichallenge2023-racing
 
 # Copy into Container
@@ -25,8 +25,8 @@ RUN rm -rf /aichallenge/aichallenge_ws/src/aichallenge_submit
 RUN tar zxf /ws/aichallenge_submit.tar.gz -C /aichallenge/aichallenge_ws/src
 
 # Build
-RUN apt-get update
-RUN apt-get -y install libgl1-mesa-glx libgl1-mesa-dri
+RUN --mount=type=cache,target=/var/cache/apt apt-get update
+RUN --mount=type=cache,target=/var/cache/apt apt-get -y install libgl1-mesa-glx libgl1-mesa-dri
 RUN bash -c ' \
   source /autoware/install/setup.bash; \
   cd /aichallenge/aichallenge_ws; \
